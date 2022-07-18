@@ -1,5 +1,7 @@
 import sqlite3
 from pprint import pp
+import json
+from collections import Counter
 
 def get_movie_by_title(titl):
     """ Возвращает фильмы по названию"""
@@ -55,4 +57,51 @@ def get_movie_by_rating(*ratings):
         for item in data:
             return dict(item)
 
-pp(get_movie_by_rating('G'))
+def get_movie_by_listed_in(list_in):
+    with sqlite3.connect("netflix.db") as con:
+        con.row_factory = sqlite3.Row
+        data = con.execute(f"""
+                        SELECT title, description
+                        FROM netflix
+                        WHERE listed_in LIKE '%{list_in}%'
+                        ORDER BY release_year DESC
+                        LIMIT 10
+                        """).fetchall()
+        for item in data:
+           return json.dumps(dict(item))
+
+
+def get_actor_in_couple(actor1, actor2):
+    with sqlite3.connect("netflix.db") as con:
+        con.row_factory = sqlite3.Row
+        data = con.execute(f"""
+                        SELECT title, netflix.cast
+                        FROM netflix
+                        WHERE netflix.cast LIKE '%{actor1}%'
+                        OR netflix.cast LIKE '%{actor2}%'
+                        ORDER BY '%{actor2}%' 
+                        """).fetchall()
+        names_list = []
+        for item in data:
+            names = set(item['cast'].split(', ')) - set([actor1, actor2])
+            for name in names:
+                names_list.append(name)
+        counter = Counter(names_list)
+        new_names_list = []
+        for k,v in dict(counter).items():
+            if v >= 2:
+                new_names_list.append(k)
+        print(new_names_list)
+
+
+
+
+
+
+
+
+
+
+
+
+pp(get_actor_in_couple('Rose McIver', 'Ben Lamb'))

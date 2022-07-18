@@ -1,6 +1,6 @@
 import sqlite3
 from flask import Flask, request, render_template
-import app as app
+
 import functions
 
 con = sqlite3.connect("netflix.db")
@@ -34,3 +34,4 @@ def page_list_movie_adult():
 
 if __name__ == "__main__":
 	app.run()
+
