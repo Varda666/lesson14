@@ -33,6 +33,7 @@ def get_movie_by_rel_year():
             return data
 
 def get_movie_between_rel_year(year1, year2):
+    '''Возвращает фильмы за определенный период'''
     with sqlite3.connect("netflix.db") as con:
         con.row_factory = sqlite3.Row
         data = con.execute(f"""
@@ -45,6 +46,7 @@ def get_movie_between_rel_year(year1, year2):
             return dict(item)
 
 def get_movie_by_rating(*ratings):
+    """ Возвращает фильмы по рейтингу"""
     for rating in ratings:
         with sqlite3.connect("netflix.db") as con:
             con.row_factory = sqlite3.Row
@@ -58,6 +60,7 @@ def get_movie_by_rating(*ratings):
             return dict(item)
 
 def get_movie_by_listed_in(list_in):
+    """Возвращает фильмы по жанру"""
     with sqlite3.connect("netflix.db") as con:
         con.row_factory = sqlite3.Row
         data = con.execute(f"""
@@ -72,6 +75,7 @@ def get_movie_by_listed_in(list_in):
 
 
 def get_actor_in_couple(actor1, actor2):
+    """Возвращает актеров играющих в паре с заданными актерами более 2х раз"""
     with sqlite3.connect("netflix.db") as con:
         con.row_factory = sqlite3.Row
         data = con.execute(f"""
@@ -95,6 +99,19 @@ def get_actor_in_couple(actor1, actor2):
 
 
 
+def get_movie_by_type_listed_in_and_release_year(type_=None, listed_in_=None, release_year_=None):
+    """Возвращает фильмы по типу, году выпуска и жанру"""
+    with sqlite3.connect("netflix.db") as con:
+        con.row_factory = sqlite3.Row
+        data = con.execute(f"""
+                        SELECT title, description
+                        FROM netflix
+                        WHERE type = '{type_}'
+                        AND listed_in LIKE '%{listed_in_}%'
+                        AND release_year = '{release_year_}'
+                        """).fetchall()
+        for item in data:
+            return json.dumps(dict(item))
 
 
 
@@ -103,5 +120,4 @@ def get_actor_in_couple(actor1, actor2):
 
 
 
-
-pp(get_actor_in_couple('Rose McIver', 'Ben Lamb'))
+pp(get_movie_by_type_listed_in_and_release_year('Movie', 'Drama', ))
