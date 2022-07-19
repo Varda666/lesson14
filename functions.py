@@ -40,10 +40,13 @@ def get_movie_between_rel_year(year1, year2):
                             SELECT title, release_year
                             FROM netflix
                             WHERE release_year BETWEEN '{year1}' AND '{year2}'
+                            ORDER BY release_year
                             LIMIT 100
                             """).fetchall()
+        result = []
         for item in data:
-            return dict(item)
+            result.append(dict(item))
+        return result
 
 def get_movie_by_rating(*ratings):
     """ Возвращает фильмы по рейтингу"""
@@ -56,8 +59,10 @@ def get_movie_by_rating(*ratings):
                             WHERE rating='{rating}'
                             LIMIT 100
                             """).fetchall()
+        result = []
         for item in data:
-            return dict(item)
+            result.append(dict(item))
+        return result
 
 def get_movie_by_listed_in(list_in):
     """Возвращает фильмы по жанру"""
@@ -70,8 +75,10 @@ def get_movie_by_listed_in(list_in):
                         ORDER BY release_year DESC
                         LIMIT 10
                         """).fetchall()
+        result = []
         for item in data:
-           return json.dumps(dict(item))
+           result.append(json.dumps(dict(item)))
+        return result
 
 
 def get_actor_in_couple(actor1, actor2):
@@ -110,8 +117,10 @@ def get_movie_by_type_listed_in_and_release_year(type_=None, listed_in_=None, re
                         AND listed_in LIKE '%{listed_in_}%'
                         AND release_year = '{release_year_}'
                         """).fetchall()
+        result = []
         for item in data:
-            return json.dumps(dict(item))
+            result.append(json.dumps(dict(item)))
+        return result
 
 
 
