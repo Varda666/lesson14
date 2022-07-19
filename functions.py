@@ -117,7 +117,3 @@ def get_movie_by_type_listed_in_and_release_year(type_=None, listed_in_=None, re
 
 
 
-
-
-
-pp(get_movie_by_type_listed_in_and_release_year('Movie', 'Drama', ))
