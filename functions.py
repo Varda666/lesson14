@@ -46,7 +46,7 @@ def get_movie_between_rel_year(year1, year2):
         result = []
         for item in data:
             result.append(dict(item))
-        return result
+        return json.dumps(result)
 
 def get_movie_by_rating(*ratings):
     """ Возвращает фильмы по рейтингу"""
@@ -62,7 +62,7 @@ def get_movie_by_rating(*ratings):
         result = []
         for item in data:
             result.append(dict(item))
-        return result
+        return json.dumps(result)
 
 def get_movie_by_listed_in(list_in):
     """Возвращает фильмы по жанру"""
@@ -77,8 +77,8 @@ def get_movie_by_listed_in(list_in):
                         """).fetchall()
         result = []
         for item in data:
-           result.append(json.dumps(dict(item)))
-        return result
+           result.append(dict(item))
+        return json.dumps(result)
 
 
 def get_actor_in_couple(actor1, actor2):

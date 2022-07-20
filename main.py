@@ -16,8 +16,8 @@ def page_movie(titl):
 
 @app.route("/movie/<year1>/<year2>")
 def page_list_movie(year1,year2):
-    movies = functions.get_movie_between_rel_year(year1=year1, year2=year2)
-    return Response(movies, mimetype='text/json')
+    return functions.get_movie_between_rel_year(year1=year1, year2=year2)
+
 
 @app.route("/rating/children")
 def page_list_movie_children():
