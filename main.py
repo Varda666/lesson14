@@ -1,6 +1,5 @@
 import sqlite3
-from flask import Flask, request, render_template
-
+from flask import Flask, jsonsify, jsonify
 import functions
 
 con = sqlite3.connect("netflix.db")
@@ -16,7 +15,8 @@ def page_movie(titl):
 
 @app.route("/movie/<year1>/<year2>")
 def page_list_movie(year1,year2):
-    return functions.get_movie_between_rel_year(year1=year1, year2=year2)
+    return jsonify(functions.get_movie_between_rel_year(year1=year1, year2=year2))
+
 
 @app.route("/rating/children")
 def page_list_movie_children():
