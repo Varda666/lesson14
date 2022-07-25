@@ -20,15 +20,15 @@ def page_list_movie(year1,year2):
 
 @app.route("/rating/children")
 def page_list_movie_children():
-    return functions.get_movie_by_rating('G')
+    return jsonify(functions.get_movie_by_rating('G'))
 
 @app.route("/rating/family")
 def page_list_movie_family():
-    return functions.get_movie_by_rating('G', 'PG', 'PG-13')
+    return jsonify(functions.get_movie_by_rating('G', 'PG', 'PG-13'))
 
 @app.route("/rating/adult")
 def page_list_movie_adult():
-    return functions.get_movie_by_rating('R', 'NC-17')
+    return jsonify(functions.get_movie_by_rating('R', 'NC-17'))
 
 
 
