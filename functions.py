@@ -3,6 +3,9 @@ from pprint import pp
 import json
 from collections import Counter
 
+from flask import jsonify
+
+
 def get_movie_by_title(titl):
     """ Возвращает фильмы по названию"""
     with sqlite3.connect("netflix.db") as con:
@@ -62,7 +65,7 @@ def get_movie_by_rating(*ratings):
         result = []
         for item in data:
             result.append(dict(item))
-        return json.dumps(result)
+        return result
 
 def get_movie_by_listed_in(list_in):
     """Возвращает фильмы по жанру"""
@@ -78,7 +81,7 @@ def get_movie_by_listed_in(list_in):
         result = []
         for item in data:
            result.append(dict(item))
-        return json.dumps(result)
+        return result
 
 
 def get_actor_in_couple(actor1, actor2):
@@ -120,7 +123,7 @@ def get_movie_by_type_listed_in_and_release_year(type_=None, listed_in_=None, re
         result = []
         for item in data:
             result.append(dict(item))
-        return json.dumps(result)
+        return result
 
 
 pp(get_movie_between_rel_year(2019, 2020))
